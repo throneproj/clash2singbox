@@ -12,18 +12,23 @@ import (
 	"github.com/xmdhs/clash2singbox/model/singbox"
 )
 
-func hysteria(p *clash.Proxies, s *singbox.SingBoxOut) error {
+func hysteria(p *clash.Proxies, s *singbox.SingBoxOut, v model.SingBoxVer) ([]singbox.SingBoxOut, error) {
 	p.Tls = true
 	tls(p, s)
-	if p.Port == "" || p.Ports == "" {
-		return fmt.Errorf("hysteria: %w", ErrNotSupportType)
-	}
 	if p.Ports != "" {
-		port, err := portsToPort(p.Ports)
-		if err != nil {
-			return fmt.Errorf("hysteria: %w", err)
+		if v >= model.SING112 {
+			var err error
+			s.ServerPorts, err = portsToPorts(p.Ports)
+			if err != nil {
+				return nil, fmt.Errorf("hysteria: %w", err)
+			}
+		} else {
+			port, err := portsToPort(p.Ports)
+			if err != nil {
+				return nil, fmt.Errorf("hysteria: %w", err)
+			}
+			s.ServerPort = port
 		}
-		s.ServerPort = port
 	}
 	if p.AuthStr != "" {
 		s.AuthStr = p.AuthStr
@@ -35,19 +40,17 @@ func hysteria(p *clash.Proxies, s *singbox.SingBoxOut) error {
 			Value: p.Obfs,
 		}
 	}
-	s.TLS.Alpn = p.Alpn
 	if p.Protocol != "udp" && p.Protocol != "" {
-		return fmt.Errorf("hysteria: %w", ErrNotSupportType)
+		return nil, fmt.Errorf("hysteria: %w", ErrNotSupportType)
 	}
-	if up, err := strconv.Atoi(p.Up); err == nil {
-		s.UpMbps = up
-	} else {
-		s.Up = p.Up
+	var err error
+	s.UpMbps, err = anyToMbps(p.Up)
+	if err != nil {
+		return nil, fmt.Errorf("hysteria: %w", err)
 	}
-	if down, err := strconv.Atoi(p.Down); err == nil {
-		s.DownMbps = down
-	} else {
-		s.Down = p.Down
+	s.DownMbps, err = anyToMbps(p.Down)
+	if err != nil {
+		return nil, fmt.Errorf("hysteria: %w", err)
 	}
 	if p.RecvWindow != 0 {
 		s.RecvWindow = int(p.RecvWindow)
@@ -65,10 +68,10 @@ func hysteria(p *clash.Proxies, s *singbox.SingBoxOut) error {
 		s.TLS.Certificate = p.CaStr1
 	}
 	s.DisableMtuDiscovery = bool(p.DisableMtuDiscovery)
-	return nil
+	return []singbox.SingBoxOut{*s}, nil
 }
 
-func hysteia2(p *clash.Proxies, s *singbox.SingBoxOut, v model.SingBoxVer) ([]singbox.SingBoxOut, error) {
+func hysteria2(p *clash.Proxies, s *singbox.SingBoxOut, v model.SingBoxVer) ([]singbox.SingBoxOut, error) {
 	p.Tls = true
 	tls(p, s)
 
@@ -77,12 +80,12 @@ func hysteia2(p *clash.Proxies, s *singbox.SingBoxOut, v model.SingBoxVer) ([]si
 			var err error
 			s.ServerPorts, err = portsToPorts(p.Ports)
 			if err != nil {
-				return nil, fmt.Errorf("hysteia2: %w", err)
+				return nil, fmt.Errorf("hysteria2: %w", err)
 			}
 		} else {
 			port, err := portsToPort(p.Ports)
 			if err != nil {
-				return nil, fmt.Errorf("hysteia2: %w", err)
+				return nil, fmt.Errorf("hysteria2: %w", err)
 			}
 			s.ServerPort = port
 		}
@@ -91,11 +94,11 @@ func hysteia2(p *clash.Proxies, s *singbox.SingBoxOut, v model.SingBoxVer) ([]si
 	var err error
 	s.UpMbps, err = anyToMbps(p.Up)
 	if err != nil {
-		return nil, fmt.Errorf("hysteia2: %w", err)
+		return nil, fmt.Errorf("hysteria2: %w", err)
 	}
 	s.DownMbps, err = anyToMbps(p.Down)
 	if err != nil {
-		return nil, fmt.Errorf("hysteia2: %w", err)
+		return nil, fmt.Errorf("hysteria2: %w", err)
 	}
 	s.Password = p.Password
 	if p.ObfsPassword != "" {
@@ -103,6 +106,11 @@ func hysteia2(p *clash.Proxies, s *singbox.SingBoxOut, v model.SingBoxVer) ([]si
 			Type:  p.Obfs,
 			Value: p.ObfsPassword,
 		}
+	}
+	if p.CaStr != "" {
+		s.TLS.Certificate = p.CaStr
+	} else {
+		s.TLS.Certificate = p.CaStr1
 	}
 	return []singbox.SingBoxOut{*s}, nil
 }
