@@ -11,9 +11,9 @@ import (
 	"sync"
 
 	"github.com/samber/lo"
+	"github.com/throneproj/clash2singbox/convert"
+	"github.com/throneproj/clash2singbox/model/clash"
 	"github.com/tidwall/gjson"
-	"github.com/xmdhs/clash2singbox/convert"
-	"github.com/xmdhs/clash2singbox/model/clash"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v3"
 )

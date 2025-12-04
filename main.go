@@ -11,10 +11,10 @@ import (
 	"time"
 
 	"github.com/samber/lo"
-	"github.com/xmdhs/clash2singbox/convert"
-	"github.com/xmdhs/clash2singbox/httputils"
-	"github.com/xmdhs/clash2singbox/model"
-	"github.com/xmdhs/clash2singbox/model/clash"
+	"github.com/throneproj/clash2singbox/convert"
+	"github.com/throneproj/clash2singbox/httputils"
+	"github.com/throneproj/clash2singbox/model"
+	"github.com/throneproj/clash2singbox/model/clash"
 	"gopkg.in/yaml.v3"
 )
 

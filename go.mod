@@ -1,4 +1,4 @@
-module github.com/xmdhs/clash2singbox
+module github.com/throneproj/clash2singbox
 
 go 1.22.0
 

@@ -7,8 +7,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/xmdhs/clash2singbox/model/clash"
-	"github.com/xmdhs/clash2singbox/model/singbox"
+	"github.com/throneproj/clash2singbox/model/clash"
+	"github.com/throneproj/clash2singbox/model/singbox"
 )
 
 func filter(isinclude bool, reg string, sl []string) ([]string, error) {

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/xmdhs/clash2singbox/model"
-	"github.com/xmdhs/clash2singbox/model/clash"
-	"github.com/xmdhs/clash2singbox/model/singbox"
+	"github.com/throneproj/clash2singbox/model"
+	"github.com/throneproj/clash2singbox/model/clash"
+	"github.com/throneproj/clash2singbox/model/singbox"
 )
 
 var convertMap = map[string]func(*clash.Proxies, *singbox.SingBoxOut, model.SingBoxVer) ([]singbox.SingBoxOut, error){

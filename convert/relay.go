@@ -3,7 +3,7 @@ package convert
 import (
 	"fmt"
 
-	"github.com/xmdhs/clash2singbox/model/singbox"
+	"github.com/throneproj/clash2singbox/model/singbox"
 )
 
 func relay(slm map[string]singbox.SingBoxOut, pl []string, name string) []singbox.SingBoxOut {

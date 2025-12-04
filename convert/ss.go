@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/xmdhs/clash2singbox/model"
-	"github.com/xmdhs/clash2singbox/model/clash"
-	"github.com/xmdhs/clash2singbox/model/singbox"
+	"github.com/throneproj/clash2singbox/model"
+	"github.com/throneproj/clash2singbox/model/clash"
+	"github.com/throneproj/clash2singbox/model/singbox"
 	"gopkg.in/yaml.v3"
 )
 

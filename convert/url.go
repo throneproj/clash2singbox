@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xmdhs/clash2singbox/model/clash"
+	"github.com/throneproj/clash2singbox/model/clash"
 )
 
 func ParseURL(s string) (clash.Proxies, error) {

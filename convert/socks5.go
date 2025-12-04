@@ -1,8 +1,8 @@
 package convert
 
 import (
-	"github.com/xmdhs/clash2singbox/model/clash"
-	"github.com/xmdhs/clash2singbox/model/singbox"
+	"github.com/throneproj/clash2singbox/model/clash"
+	"github.com/throneproj/clash2singbox/model/singbox"
 )
 
 func httpOpts(p *clash.Proxies, s *singbox.SingBoxOut) error {
